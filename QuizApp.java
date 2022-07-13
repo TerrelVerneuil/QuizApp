@@ -1,15 +1,13 @@
-package work;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import com.jaunt.component.Label;
-
 import java.awt.FlowLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
