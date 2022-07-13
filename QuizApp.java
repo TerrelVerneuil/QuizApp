@@ -168,7 +168,6 @@ public class QuizApp extends JFrame implements ActionListener {
 	public static boolean answer() {
 
 		if(current == 1 && b3.isSelected() == true) {
-
 			return true;
 		}
 		else if(current == 2 && b4.isSelected() == true) {
@@ -216,17 +215,10 @@ public class QuizApp extends JFrame implements ActionListener {
 					current++;
 				}
 			}
-			int randomIndex = new Random().nextInt(used.length);
-			for (Object ob : used) {
-				if (ob != null) {
-					empty = false;
-					break;
-				}
-			}
-
 			if(e.getSource() == submit) { //submit answer~`	
 				if(answer() == true) {			
 					scorecount++;
+					current++;
 					this.dispose(); //remove current frame
 					scores = String.valueOf(scorecount);
 					score.setText(scores);
