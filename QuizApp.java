@@ -1,13 +1,15 @@
-
+package work;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import com.jaunt.component.Label;
+
 import java.awt.FlowLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,12 +31,12 @@ public class QuizApp extends JFrame implements ActionListener {
 	static int[] store = new int[10];
 
 	static int current = 0;
-	
+
 	boolean empty = true;
 	//buttons checked function
 
 	private JTextField textField;
-	
+
 	public QuizApp() { //constructor of QuizApp class
 		//creation of radio buttons
 
@@ -83,6 +85,10 @@ public class QuizApp extends JFrame implements ActionListener {
 		q.setTitle("QuestionApp");  
 		q.setVisible(true);
 		System.out.println(answer());
+
+		if(current == 10) {
+
+		}
 
 	}
 	void setData() { //questions
@@ -153,16 +159,16 @@ public class QuizApp extends JFrame implements ActionListener {
 		}
 
 	}
-	
+
 	public static int[] removeElement(int[] arr, int item) {
 		return Arrays.stream(arr)
 				.filter(i -> i != item)
 				.toArray();
 	}
 	public static boolean answer() {
-		
+
 		if(current == 1 && b3.isSelected() == true) {
-			
+
 			return true;
 		}
 		else if(current == 2 && b4.isSelected() == true) {
@@ -199,46 +205,50 @@ public class QuizApp extends JFrame implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		if(used.length != 0) {
-			if(e.getSource() == nxtQuestion) {
-				this.dispose(); //close previous window after button is pressed
-				QuizApp q = new QuizApp();
-				q.setBounds(200, 500, 300, 300); //new bounds
-				q.setTitle("QuestionApp");  //creation basically 
-				q.setData();
-				current++;
-				System.out.println(current);
-			
+		if(current != 10) {
+			if(used.length != 0) {
+				if(e.getSource() == nxtQuestion) {
+					this.dispose(); //close previous window after button is pressed
+					QuizApp q = new QuizApp();
+					q.setBounds(200, 500, 300, 300); //new bounds
+					q.setTitle("QuestionApp");  //creation basically 
+					q.setData();
+					current++;
+				}
 			}
-		}
-		int randomIndex = new Random().nextInt(used.length);
-		for (Object ob : used) {
-			if (ob != null) {
-				empty = false;
-				break;
+			int randomIndex = new Random().nextInt(used.length);
+			for (Object ob : used) {
+				if (ob != null) {
+					empty = false;
+					break;
+				}
 			}
-		}
-		
-		if(e.getSource() == submit) { //submit answer~`	
-			if(answer() == true) {		
-				System.out.println("that is correct");		
-				scorecount++;
-				this.dispose();
-				scores = String.valueOf(scorecount);
-				score.setText(scores);
-				QuizApp q = new QuizApp();
-				q.setBounds(200, 500, 300, 300); //new bounds
-				q.setTitle("QuestionApp");  //creation basically 
-				
-				
-			}
-			else {
-				System.out.println("that is incorrect");
-			}
-		}
-		
 
+			if(e.getSource() == submit) { //submit answer~`	
+				if(answer() == true) {			
+					scorecount++;
+					this.dispose(); //remove current frame
+					scores = String.valueOf(scorecount);
+					score.setText(scores);
+					QuizApp q = new QuizApp();
+					q.setBounds(200, 500, 300, 300); //new bounds
+					q.setTitle("QuestionApp");  //creation basically 
+					q.setData();
+				}
+				else if(answer() == false) {
+					current++;
+					QuizApp q = new QuizApp();
+					q.setBounds(200, 500, 300, 300); //new bounds
+					q.setTitle("QuestionApp");  //creation basically 
+					this.dispose();
+					q.setData();
+				}
+			}
+		}
+		else {
+			this.dispose();
+			System.out.println("This Program has concluded, You scored a " + scorecount + "/ 10");
+		}
 	}
 
 }
